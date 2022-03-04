@@ -9,19 +9,24 @@ from adafruit_hid.keycode import Keycode
 
 from adafruit_debouncer import Debouncer
 
+#from adafruit_ble import BLERadio
+#from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
+#from adafruit_ble.services.nordic import UARTService
+
+#from adafruit_airlift.esp32 import ESP32
+
 def createButton(pinRef):
   btn = digitalio.DigitalInOut(pinRef)
   btn.direction = digitalio.Direction.INPUT
   btn.pull = digitalio.Pull.UP
   return btn
 
-button_fire = createButton(board.D5)
-button_up = createButton(board.D10)
-button_down = createButton(board.D11)
-button_left = createButton(board.D6)
-button_right = createButton(board.D9)
-
-pin_kneel = digitalio.DigitalInOut(board.D12)
+button_fire = createButton(board.A0)
+button_up = createButton(board.A3)
+button_down = createButton(board.D5)
+button_left = createButton(board.A1)
+button_right = createButton(board.A2)
+pin_kneel = digitalio.DigitalInOut(board.D6)
 pin_kneel.direction = digitalio.Direction.INPUT
 pin_kneel.pull = digitalio.Pull.UP
 button_kneel = Debouncer(pin_kneel)
