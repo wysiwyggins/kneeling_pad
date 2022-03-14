@@ -79,17 +79,18 @@ void loop() {
   
     while (true) {
       if (fire == LOW) {
-        Keyboard.press(KEY_RETURN);
+        Keyboard.write(KEY_RETURN);
       } else if (up == LOW) {
-        Keyboard.press(KEY_UP_ARROW);
+        Keyboard.write(KEY_UP_ARROW);
       } else if (down == LOW) {
-        Keyboard.press(KEY_DOWN_ARROW);
+        Keyboard.write(KEY_DOWN_ARROW);
       } else if (left == LOW) {
-        Keyboard.press(KEY_LEFT_ARROW);
+        Keyboard.write(KEY_LEFT_ARROW);
       } else if (right == LOW) {
-        Keyboard.press(KEY_RIGHT_ARROW);
+        Keyboard.write(KEY_RIGHT_ARROW);
       } else if (kneel == LOW) {
         Keyboard.press('p');
+        Serial.println("kneeling.\n");
       } 
       delay(10);
     }
