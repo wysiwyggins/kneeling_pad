@@ -12,7 +12,7 @@
  any redistribution
 *********************************************************************/
 #include <bluefruit.h>
-#include <Keyboard.h>
+#include <BLE52_Mouse_and_Keyboard.h>
 
 BLEDis bledis;
 BLEHidAdafruit blehid;
@@ -25,9 +25,14 @@ const int ATARI_BLUE = A4;
 const int KNEELER = A5;
 const int LED_PIN = 13;
 
-
+bool Mouse.isConnected(void);
+bool Keyboard.isConnected(void);
 
 bool hasKeyPressed = false;
+
+
+
+
 
 void setup() 
 {
@@ -127,6 +132,7 @@ void loop()
   // from circuitpython version
   
   while (true) {
+    Keyboard.begin();
     if (fire == LOW){
       Keyboard.press(KEY_RETURN);
     } else if (up == LOW){
