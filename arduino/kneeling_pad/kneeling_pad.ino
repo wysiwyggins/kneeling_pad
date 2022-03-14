@@ -90,7 +90,7 @@ void loop() {
         Keyboard.write(KEY_RIGHT_ARROW);
       } else if (kneel == LOW) {
         Keyboard.press('p');
-        Serial.println("kneeling.\n");
+        Serial.println("kneeling.");
       } 
       delay(10);
     }
