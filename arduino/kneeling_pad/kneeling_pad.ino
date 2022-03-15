@@ -26,6 +26,7 @@ void setup()
   pinMode(ATARI_GREEN, INPUT_PULLUP);
   pinMode(ATARI_BROWN, INPUT_PULLUP);
   pinMode(ATARI_WHITE, INPUT_PULLUP);
+  pinMode(ATARI_BLUE, INPUT_PULLUP);
   pinMode(KNEELER, INPUT_PULLUP);
   pinMode(LED_PIN, OUTPUT);
 
@@ -77,19 +78,24 @@ void loop() {
     int right = digitalRead(ATARI_BLUE);
     int kneel = digitalRead(KNEELER);
   
-
+    //bool test = false
     if (fire == LOW) {
       Keyboard.write(KEY_RETURN);
+      Serial.println("clean");
     } else if (up == LOW) {
       Keyboard.write(KEY_UP_ARROW);
+      Serial.println("up.");
     } else if (down == LOW) {
       Keyboard.write(KEY_DOWN_ARROW);
+      Serial.println("down.");
     } else if (left == LOW) {
       Keyboard.write(KEY_LEFT_ARROW);
+      Serial.println("left.");
     } else if (right == LOW) {
       Keyboard.write(KEY_RIGHT_ARROW);
+      Serial.println("right.");
     } else if (kneel == LOW) {
-      Keyboard.press('p');
+      Keyboard.write('p');
       Serial.println("kneeling.");
     } 
     delay(10);
