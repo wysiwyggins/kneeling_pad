@@ -72,10 +72,10 @@ void setup()
 void loop() {
 
     int fire = digitalRead(ATARI_ORANGE);
-    int up = digitalRead(ATARI_GREEN);
-    int down = digitalRead(ATARI_BROWN);
-    int left = digitalRead(ATARI_WHITE);
-    int right = digitalRead(ATARI_BLUE);
+    int left = digitalRead(ATARI_GREEN);
+    int right = digitalRead(ATARI_BROWN);
+    int down = digitalRead(ATARI_WHITE);
+    int up = digitalRead(ATARI_BLUE);
     int kneel = digitalRead(KNEELER);
   
     //bool test = false
