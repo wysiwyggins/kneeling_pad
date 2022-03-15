@@ -77,23 +77,23 @@ void loop() {
     int right = digitalRead(ATARI_BLUE);
     int kneel = digitalRead(KNEELER);
   
-    while (true) {
-      if (fire == LOW) {
-        Keyboard.write(KEY_RETURN);
-      } else if (up == LOW) {
-        Keyboard.write(KEY_UP_ARROW);
-      } else if (down == LOW) {
-        Keyboard.write(KEY_DOWN_ARROW);
-      } else if (left == LOW) {
-        Keyboard.write(KEY_LEFT_ARROW);
-      } else if (right == LOW) {
-        Keyboard.write(KEY_RIGHT_ARROW);
-      } else if (kneel == LOW) {
-        Keyboard.press('p');
-        Serial.println("kneeling.");
-      } 
-      delay(10);
-    }
+
+    if (fire == LOW) {
+      Keyboard.write(KEY_RETURN);
+    } else if (up == LOW) {
+      Keyboard.write(KEY_UP_ARROW);
+    } else if (down == LOW) {
+      Keyboard.write(KEY_DOWN_ARROW);
+    } else if (left == LOW) {
+      Keyboard.write(KEY_LEFT_ARROW);
+    } else if (right == LOW) {
+      Keyboard.write(KEY_RIGHT_ARROW);
+    } else if (kneel == LOW) {
+      Keyboard.press('p');
+      Serial.println("kneeling.");
+    } 
+    delay(10);
+    
 }
 
 /*
