@@ -17,6 +17,13 @@ const int ATARI_BLUE = A4;
 const int KNEELER = A5;
 const int LED_PIN = 13;
 
+//debounce clean and kneel
+int oldKneelVal = 0;
+int KneelState = 0;
+
+int oldCleanVal = 0;
+int CleanState = 0;
+
 void setup() 
 {
 
@@ -76,29 +83,57 @@ void loop() {
     int right = digitalRead(ATARI_BROWN);
     int down = digitalRead(ATARI_WHITE);
     int up = digitalRead(ATARI_BLUE);
-    int kneel = digitalRead(KNEELER);
+    //int kneel = digitalRead(KNEELER);
   
     //bool test = false
-    if (fire == LOW) {
-      Keyboard.write(KEY_RETURN);
-      Serial.println("clean");
-    } else if (up == LOW) {
+//    if (fire == LOW) {
+//      Keyboard.write(KEY_RETURN);
+//      Serial.println("clean");
+//    }
+    
+    if (up == LOW) {
       Keyboard.write(KEY_UP_ARROW);
       Serial.println("up.");
-    } else if (down == LOW) {
+    } 
+    if (down == LOW) {
       Keyboard.write(KEY_DOWN_ARROW);
       Serial.println("down.");
-    } else if (left == LOW) {
+    } 
+    if (left == LOW) {
       Keyboard.write(KEY_LEFT_ARROW);
       Serial.println("left.");
-    } else if (right == LOW) {
+    } 
+    if (right == LOW) {
       Keyboard.write(KEY_RIGHT_ARROW);
       Serial.println("right.");
-    } else if (kneel == LOW) {
-      Keyboard.write('p');
-      Serial.println("kneeling.");
     } 
-    delay(10);
+    
+//    else if (kneel == LOW) {
+//      Keyboard.write('p');
+//      Serial.println("kneeling.");
+//    } 
+
+
+    int kneelVal = digitalRead(KNEELER); 
+    if (kneelVal == LOW && oldKneelVal == HIGH) {
+      Keyboard.press('p');
+      delay(10);
+    } else if (kneelVal == HIGH && oldKneelVal == LOW) {
+      Keyboard.release('p');
+    }
+    oldKneelVal = kneelVal;
+
+    int cleanVal = digitalRead(ATARI_ORANGE); 
+    if (cleanVal == LOW && oldCleanVal == HIGH) {
+      Keyboard.press('p');
+      delay(10);
+    } else if (cleanVal == HIGH && oldCleanVal == LOW) {
+      Keyboard.release('p');
+    }
+    oldCleanVal = cleanVal;
+
+  
+    delay(50);
     
 }
 
