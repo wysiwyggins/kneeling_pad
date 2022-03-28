@@ -81,15 +81,15 @@ void loop() {
     int fire = digitalRead(ATARI_ORANGE);
     int left = digitalRead(ATARI_GREEN);
     int right = digitalRead(ATARI_BROWN);
-    int down = digitalRead(ATARI_WHITE);
-    int up = digitalRead(ATARI_BLUE);
-    //int kneel = digitalRead(KNEELER);
+    int down = digitalRead(ATARI_BLUE);
+    int up = digitalRead(ATARI_WHITE);
+    int kneel = digitalRead(KNEELER);
   
-    //bool test = false
-//    if (fire == LOW) {
-//      Keyboard.write(KEY_RETURN);
-//      Serial.println("clean");
-//    }
+
+    if (fire == LOW) {
+      Keyboard.write(KEY_RETURN);
+      Serial.println("clean");
+    }
     
     if (up == LOW) {
       Keyboard.write(KEY_UP_ARROW);
@@ -108,32 +108,32 @@ void loop() {
       Serial.println("right.");
     } 
     
-//    else if (kneel == LOW) {
-//      Keyboard.write('p');
-//      Serial.println("kneeling.");
-//    } 
+    if (kneel == LOW) {
+      Keyboard.write('p');
+      Serial.println("kneeling.");
+    } 
 
 
-    int kneelVal = digitalRead(KNEELER); 
-    if (kneelVal == LOW && oldKneelVal == HIGH) {
-      Keyboard.press('p');
-      delay(10);
-    } else if (kneelVal == HIGH && oldKneelVal == LOW) {
-      Keyboard.release('p');
-    }
-    oldKneelVal = kneelVal;
+//    int kneelVal = digitalRead(KNEELER); 
+//    if (kneelVal == LOW && oldKneelVal == HIGH) {
+//      Keyboard.press('p');
+//      delay(10);
+//    } else if (kneelVal == HIGH && oldKneelVal == LOW) {
+//      Keyboard.release('p');
+//    }
+//    oldKneelVal = kneelVal;
 
-    int cleanVal = digitalRead(ATARI_ORANGE); 
-    if (cleanVal == LOW && oldCleanVal == HIGH) {
-      Keyboard.press('p');
-      delay(10);
-    } else if (cleanVal == HIGH && oldCleanVal == LOW) {
-      Keyboard.release('p');
-    }
-    oldCleanVal = cleanVal;
+//    int cleanVal = digitalRead(ATARI_ORANGE); 
+//    if (cleanVal == LOW && oldCleanVal == HIGH) {
+//      Keyboard.press('p');
+//      delay(10);
+//    } else if (cleanVal == HIGH && oldCleanVal == LOW) {
+//      Keyboard.release('p');
+//    }
+//    oldCleanVal = cleanVal;
 
   
-    delay(50);
+    delay(70);
     
 }
 
