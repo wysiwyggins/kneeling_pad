@@ -9,39 +9,39 @@ from adafruit_hid.keycode import Keycode
 
 from adafruit_debouncer import Debouncer
 
-from adafruit_ble import BLERadio
-from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
-from adafruit_ble.services.nordic import UARTService
+# from adafruit_ble import BLERadio
+# from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
+# from adafruit_ble.services.nordic import UARTService
 
-from adafruit_airlift.esp32 import ESP32
+# from adafruit_airlift.esp32 import ESP32
 
-esp32 = ESP32(
-    reset=board.D12,
-    gpio0=board.D10,
-    busy=board.D11,
-    chip_select=board.D13,
-    tx=board.TX,
-    rx=board.RX,
-)
+# esp32 = ESP32(
+#     reset=board.D12,
+#     gpio0=board.D10,
+#     busy=board.D11,
+#     chip_select=board.D13,
+#     tx=board.TX,
+#     rx=board.RX,
+# )
 
-adapter = esp32.start_bluetooth()
+# adapter = esp32.start_bluetooth()
 
-ble = BLERadio(adapter)
-uart = UARTService()
-advertisement = ProvideServicesAdvertisement(uart)
+# ble = BLERadio(adapter)
+# uart = UARTService()
+# advertisement = ProvideServicesAdvertisement(uart)
 
-while True:
-    ble.start_advertising(advertisement)
-    print("waiting to connect")
-    while not ble.connected:
-        pass
-    print("connected: trying to read input")
-    while ble.connected:
-        # Returns b'' if nothing was read.
-        one_byte = uart.read(1)
-        if one_byte:
-            print(one_byte)
-            uart.write(one_byte)
+# while True:
+#     ble.start_advertising(advertisement)
+#     print("waiting to connect")
+#     while not ble.connected:
+#         pass
+#     print("connected: trying to read input")
+#     while ble.connected:
+#         # Returns b'' if nothing was read.
+#         one_byte = uart.read(1)
+#         if one_byte:
+#             print(one_byte)
+#             uart.write(one_byte)
 
 def createButton(pinRef):
   btn = digitalio.DigitalInOut(pinRef)
@@ -51,16 +51,14 @@ def createButton(pinRef):
 
 button_fire = createButton(board.A0)
 button_up = createButton(board.A3)
-button_down = createButton(board.D5)
+button_down = createButton(board.D24)
 button_left = createButton(board.A1)
 button_right = createButton(board.A2)
-pin_kneel = digitalio.DigitalInOut(board.D6)
+
+pin_kneel = digitalio.DigitalInOut(board.D25)
 pin_kneel.direction = digitalio.Direction.INPUT
 pin_kneel.pull = digitalio.Pull.UP
 button_kneel = Debouncer(pin_kneel)
-
-
-
 
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
@@ -68,15 +66,13 @@ led.direction = digitalio.Direction.OUTPUT
 time.sleep(1)
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
-
-
     
 while True:
     button_kneel.update()
     if not button_fire.value:
         led.value = True
         keyboard.press(Keycode.ENTER)
-    elif not button_up.value:
+    if not button_up.value:
         led.value = True
         keyboard.press(Keycode.UP_ARROW)
     elif not button_down.value:
