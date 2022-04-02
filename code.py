@@ -51,10 +51,11 @@ def createButton(pinRef):
 
 button_fire = createButton(board.A0)
 button_up = createButton(board.A3)
-button_down = createButton(board.D5)
+button_down = createButton(board.D24)
 button_left = createButton(board.A1)
 button_right = createButton(board.A2)
-pin_kneel = digitalio.DigitalInOut(board.D6)
+
+pin_kneel = digitalio.DigitalInOut(board.D25)
 pin_kneel.direction = digitalio.Direction.INPUT
 pin_kneel.pull = digitalio.Pull.UP
 button_kneel = Debouncer(pin_kneel)
@@ -76,7 +77,7 @@ while True:
     if not button_fire.value:
         led.value = True
         keyboard.press(Keycode.ENTER)
-    elif not button_up.value:
+    if not button_up.value:
         led.value = True
         keyboard.press(Keycode.UP_ARROW)
     elif not button_down.value:
