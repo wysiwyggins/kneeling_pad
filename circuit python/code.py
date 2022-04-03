@@ -49,11 +49,16 @@ def createButton(pinRef):
   btn.pull = digitalio.Pull.UP
   return btn
 
-button_fire = createButton(board.A0)
+#button_fire = createButton(board.A0)
 button_up = createButton(board.A3)
 button_down = createButton(board.D24)
 button_left = createButton(board.A1)
 button_right = createButton(board.A2)
+
+pin_fire = digitalio.DigitalInOut(board.A0)
+pin_fire.direction = digitalio.Direction.INPUT
+pin_fire.pull = digitalio.Pull.UP
+button_fire = Debouncer(pin_fire)
 
 pin_kneel = digitalio.DigitalInOut(board.D25)
 pin_kneel.direction = digitalio.Direction.INPUT
@@ -66,28 +71,48 @@ led.direction = digitalio.Direction.OUTPUT
 time.sleep(1)
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
-    
+
 while True:
     button_kneel.update()
-    if not button_fire.value:
+    button_fire.update()
+
+    if button_fire.fell:
         led.value = True
         keyboard.press(Keycode.ENTER)
+    elif button_fire.rose:
+        led.value = False
+        keyboard.release(Keycode.ENTER)
+
     if not button_up.value:
         led.value = True
         keyboard.press(Keycode.UP_ARROW)
-    elif not button_down.value:
+    else:
+        keyboard.release(Keycode.UP_ARROW)
+    
+    if not button_down.value:
         led.value = True
         keyboard.press(Keycode.DOWN_ARROW)
-    elif not button_left.value:
+    else:
+        keyboard.release(Keycode.DOWN_ARROW)
+
+    if not button_left.value:
         led.value = True
         keyboard.press(Keycode.LEFT_ARROW)
-    elif not button_right.value:
+    else:
+        keyboard.release(Keycode.LEFT_ARROW)
+
+    if not button_right.value:
         led.value = True
         keyboard.press(Keycode.RIGHT_ARROW)
-    elif button_kneel.fell:
-        led.value = True
-        keyboard_layout.write("p")
     else:
         led.value = False
-        keyboard.release_all()
+        keyboard.release(Keycode.RIGHT_ARROW)
+
+    if button_kneel.fell:
+        led.value = True
+        keyboard_layout.press("p")
+    elif button_kneel.rose:
+        led.value = False
+        keyboard_layout.release("p")
+
     time.sleep(0.01)
