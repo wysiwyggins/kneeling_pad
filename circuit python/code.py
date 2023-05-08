@@ -7,6 +7,7 @@ import neopixel
 from digitalio import DigitalInOut, Pull, Direction
 from adafruit_debouncer import Debouncer
 from adafruit_esp32spi import adafruit_esp32spi
+from adafruit_esp32spi import adafruit_esp32spi_wifimanager
 
 from mqtt import connectToMQTT
 from secrets import secrets
@@ -43,7 +44,7 @@ mqtt_client = connectToMQTT(secrets, esp, {
 })
 
 # setup the button
-pin = DigitalInOut(board.SDA1)
+pin = DigitalInOut(board.D9)
 pin.direction = Direction.INPUT
 pin.pull = Pull.UP
 switch = Debouncer(pin)

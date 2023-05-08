@@ -1,5 +1,6 @@
 import adafruit_minimqtt.adafruit_minimqtt as MQTT
 import adafruit_esp32spi.adafruit_esp32spi_socket as socket
+
 #import ssl
 
 topicMap = {}
@@ -33,13 +34,15 @@ def onMessage(client, topic, message):
       pass
 
 def connectToMQTT(secrets, esp, topics):
-  MQTT.set_socket(socket, esp)
+  socket.set_interface(esp)
   mqttClient = MQTT.MQTT(
     broker=secrets["broker"],
-    port=secrets["port"],
-    ssl_context=ssl.create_default_context(),
+    socket_pool=socket,
+    is_ssl=False
+    #port=secrets["port"],
+    #ssl_context=ssl.create_default_context(),
   )
-  
+
   # Connect callback handlers to mqttClient
   mqttClient.on_connect = onConnect
   mqttClient.on_disconnect = onDisconnect
