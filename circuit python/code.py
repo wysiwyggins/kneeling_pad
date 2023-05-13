@@ -36,7 +36,7 @@ esp32_reset = DigitalInOut(board.ESP_RESET)
 spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
 esp = adafruit_esp32spi.ESP_SPIcontrol(spi, esp32_cs, esp32_ready, esp32_reset)
 
-connectToWifi(secrets, esp)
+wifi = connectToWifi(secrets, esp)
 
 # create mqtt
 mqtt_client = connectToMQTT(secrets, esp, {
@@ -49,12 +49,28 @@ pin.direction = Direction.INPUT
 pin.pull = Pull.UP
 switch = Debouncer(pin)
 
+counter = DigitalInOut(board.D8)
+counter.direction = Direction.OUTPUT
+
 while True:
-  mqtt_client.loop()
-  switch.update()
-  if switch.rose:
-    print("Sending topic `action/unkneel`")
-    mqtt_client.publish("action/unkneel", 1)
-  elif switch.fell:
-    print("Sending topic `action/kneel`")
-    mqtt_client.publish("action/kneel", 1)
+  try:
+    mqtt_client.loop()
+    switch.update()
+    if switch.rose:
+      print("Sending topic `kneels/set`")
+      mqtt_client.publish("kneels/set", 1)
+      counter.value = False 
+    elif switch.fell:
+      print("Sending topic `kneels/set`")
+      mqtt_client.publish("kneels/set", 0)
+      counter.value = True 
+  except Exception as e:
+    print("An error occurred: ", e)
+    print("Attempting to reconnect to WiFi and MQTT...")
+    try:
+      wifi.reset()
+      wifi.connect()
+      mqtt_client.reconnect()
+    except Exception as e:
+      print("Failed to reconnect, error: ", e)
+    continue
